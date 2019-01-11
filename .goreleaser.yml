@@ -2,7 +2,7 @@
 # Build customization
 builds:
 - main: main.go
-  binary: apichecker
+  binary: qiitasearch
   goos:
   - windows
   - darwin
