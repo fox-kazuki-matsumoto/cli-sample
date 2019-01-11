@@ -1,19 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
 	"github.com/urfave/cli"
+	"github.com/fox-kazuki-matsumoto/cli-sample/api"
 )
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "greet"
-	app.Usage = "fight the loneliness!"
+	app.Name = "qiitasearch"
+	app.Usage = "search qiita articles"
 	app.Action = func(c *cli.Context) error {
-		fmt.Println("Hello friend!")
+		//fmt.Println("Hello friend!")
+		api.RunQiitaSearch()
 		return nil
 	}
 
