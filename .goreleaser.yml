@@ -9,3 +9,17 @@ builds:
   - linux
   goarch:
   - amd64
+
+brew:
+  github:
+    owner: fox-kazuki-matsumoto
+    name: homebrew-cli-sample
+
+    homepage: "https://github.com/fox-kazuki-matsumoto/cli-sample"
+
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@carlosbecker.com
+
+    install: |
+      bin.install "cli-sample"
