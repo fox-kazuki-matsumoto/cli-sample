@@ -8,6 +8,8 @@ import (
 	"net/url"
 	"os"
 	"time"
+	"github.com/olekukonko/tablewriter"
+	"strconv"
 )
 
 // jsonのパース用に構造体を定義
@@ -112,7 +114,7 @@ func RunQiitaSearch() {
 
 	var baseDate time.Time
 
-	fmt.Println("いいね数		タイトル		URL")
+	//fmt.Println("いいね数		タイトル		URL")
 
 	// コマンドライン引数がある場合 YYYY-MM-DD の形で指定 不適切な方の場合エラー
 	//var err error
@@ -136,8 +138,33 @@ func RunQiitaSearch() {
 		targetDate := startDate.AddDate(0, 0, i)
 		fmt.Printf("%d-%d-%d\n", targetDate.Year(), int(targetDate.Month()), targetDate.Day())
 
+		var output [][]string
+		// データ取得
 		datas := fetchQiitaData(qiitaToken, targetDate)
 
-		outputQiitaData(datas)
+		// 出力用データ整形
+		for _, val := range datas {
+			title := ""
+			splitlen := 40
+			runes := []rune(val.Title)
+
+			for i := 0; i< len(runes); i += splitlen {
+				if i+splitlen < len(runes) {
+					title += string(runes[i:(i+splitlen)]) + "\n"
+				} else {
+					title += string(runes[i:])
+				}
+			}
+
+			output = append(output, []string{strconv.Itoa(val.LikesCount), title, val.Url})
+		}
+
+		// テーブル描画
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"いいね数", "タイトル", "URL"})
+		table.SetAutoMergeCells(true)
+		table.SetRowLine(true)
+		table.AppendBulk(output)
+		table.Render()
 	}
 }
