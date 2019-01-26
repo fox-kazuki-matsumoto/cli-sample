@@ -2,7 +2,7 @@
 # Build customization
 builds:
 - main: main.go
-  binary: qiitasearch
+  binary: cli-sample
   goos:
   - windows
   - darwin
